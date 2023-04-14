@@ -66,23 +66,16 @@ ui <- fluidPage(theme=shinytheme("superhero"),
   )),
     # Sidebar with a slider input for number of bins 
     fluidRow(
-        column(width=4,
-            radioButtons("pal",
-                        "Viridis Palette:",
-                        choices = c(LETTERS[1:5]),
-                        selected = "D",
-                        inline = TRUE
-                        )),
-        column(width=4, 
-               selectInput("var",
-                        "Variable",
-                        choices = list("Corruption Index" = "CPI",
-                                       "Rank" = "Rank",
-                                       "No. of Sources" = "sources",
-                                       "Std. Error" = "standard_error"),
-                        selected = "CPI"),
-               print(
-                 HTML("<small>Corruption Index: Corruption Perceptions Index (CPI) <br/> 
+      column(width=5, 
+             selectInput("var",
+                         "Variable",
+                         choices = list("Corruption Index" = "CPI",
+                                        "Rank" = "Rank",
+                                        "No. of Sources" = "sources",
+                                        "Std. Error" = "standard_error"),
+                         selected = "CPI"),
+             print(
+               HTML("<small>Corruption Index: Corruption Perceptions Index (CPI) <br/> 
                       Rank: Ranking, Best to Worst <br/>
                       No. of Sources: Number of Sources for CPI <br/>
                       Std. Error: Variability of CPI</small>"))),
@@ -92,7 +85,18 @@ ui <- fluidPage(theme=shinytheme("superhero"),
                         min = 2017,
                         max= 2022,
                         value = 2022)
-            )
+            ),
+      column(width=3,
+             radioButtons("pal",
+                          "Viridis Palette:",
+                          choices = c("A: magma" = "A",
+                                      "B: inferno" = "B",
+                                      "C: plasma" = "C",
+                                      "D: viridis" = "D",
+                                      "E: cividis" = "E"),
+                          selected = "D"
+             ))
+      
     )
 )
 
