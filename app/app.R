@@ -85,30 +85,31 @@ ui <- fluidPage(theme=shinytheme("superhero"),
 fluidRow(
       column(width=4, 
              selectInput("var",
-                         "Variable",
-                         choices = list("Corruption Index" = "CPI",
+                         h5("Variable"),
+                         choices = list("Corruption Index (CPI)" = "CPI",
                                         "Rank" = "Rank",
                                         "No. of Sources" = "sources",
                                         "Std. Error" = "standard_error"),
                          selected = "CPI"),
              print(
                HTML("<font color='#a2c4c9'> <small>Corruption Index: Corruption Perceptions Index <br/> 
-                      (CPI) Higher values indicate less corruption <br />
-                      Rank: Ranking, Best to Worst <br/>
+                      Higher values of CPI indicate less corruption <br />
+                      Rank: Ranking, Best (1) to Worst <br/>
                       No. of Sources: Number of Sources for CPI <br/>
                       Std. Error: Variability of CPI</small> </font>"))),
 # A 4 width column to select a year with a slider
         column(width=3,
             sliderInput("year",
-                        "Year",
+                        h5("Year"),
                         min = 2017,
                         max= 2022,
-                        value = 2022)
+                        value = 2022,
+                        sep="")
             ),
 # a 3 width column with the palette choices from viridis
       column(width=5,
              radioButtons("pal",
-                          "Viridis Palette:",
+                          h5("Viridis Palette:"),
                           choices = c("A: magma" = "A",
                                       "B: inferno" = "B",
                                       "C: plasma" = "C",
@@ -202,6 +203,7 @@ server <- function(input, output, session) {
 # The input palette and the input variable are needed
 # get is a base R command for grabbing the variable in this
 # piped operation taking base data from the reactive
+  l <- list(color = toRGB("white"), width = 0.5)
   output$distPlot <- renderPlotly({
     plot_geo(Map.Me(),
              hovertemplate=~tooltip) |>
@@ -209,7 +211,8 @@ server <- function(input, output, session) {
         z = ~get(input$var), 
         locations = ~iso_a3,
         color = ~get(input$var), 
-        colors = viridis_pal(option = input$pal)(3)
+        colors = viridis_pal(option = input$pal)(3),
+        marker = list(line = l)
       ) |> 
       layout(
         geo = list(showframe=FALSE)) |>
