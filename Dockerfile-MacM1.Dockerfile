@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 rocker/shiny:4.2.3
+FROM --platform=linux/amd64 rocker/shiny:4.2.3
 ENV RENV_CONFIG_REPOS_OVERRIDE https://packagemanager.rstudio.com/cran/latest
 RUN apt-get update -qq && \ 
   apt-get install -y --no-install-recommends \
